@@ -42,7 +42,7 @@ $(eval $(call addlib_s,libnginx,$(CONFIG_LIBNGINX)))
 ################################################################################
 # Sources
 ################################################################################
-LIBNGINX_VERSION = 1.15.6
+LIBNGINX_VERSION = 1.28.0
 LIBNGINX_BASENAME = nginx-$(LIBNGINX_VERSION)
 LIBNGINX_URL = http://nginx.org/download/$(LIBNGINX_BASENAME).tar.gz
 LIBNGINX_PATCHDIR = $(LIBNGINX_BASE)/patches
@@ -180,8 +180,6 @@ LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP) += $(LIBNGINX_SRC)/http/modules/ngx_http_l
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP) += $(LIBNGINX_SRC)/http/ngx_http_header_filter_module.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP) += $(LIBNGINX_SRC)/http/modules/ngx_http_chunked_filter_module.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2_encode.c
-LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2_huff_decode.c
-LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2_huff_encode.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2_table.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2_filter_module.c
@@ -272,3 +270,4 @@ LIBNGINX_SRCS-$(CONFIG_LIBNGINX_STREAM_UPSTREAM_LEAST_CONN) += $(LIBNGINX_SRC)/s
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_STREAM_UPSTREAM_RANDOM) += $(LIBNGINX_SRC)/stream/ngx_stream_upstream_random_module.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_STREAM_UPSTREAM_ZONE) += $(LIBNGINX_SRC)/stream/ngx_stream_upstream_zone_module.c
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_STREAM_SSL_PREREAD) += $(LIBNGINX_SRC)/stream/ngx_stream_ssl_preread_module.c
+LIBNGINX_SRCS-y += $(LIBNGINX_BASE)/src/nginx_huff_stubs.c

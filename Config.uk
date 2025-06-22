@@ -1,6 +1,6 @@
 menuconfig LIBNGINX
 	bool "libnginx - a HTTP and reverse proxy, a mail proxy, and a generic TCP/UDP proxy server"
-	default n
+	default y
 	select LIBUKSCHEDCOOP
 	select LIBPOSIX_LIBDL
 	select LIBPOSIX_PROCESS
