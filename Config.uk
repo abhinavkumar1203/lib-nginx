@@ -27,6 +27,12 @@ menuconfig LIBNGINX
 
 if LIBNGINX
 
+menuconfig LIBNGINX_HTTP_V2
+    bool "Enable HTTP/2 (ngx_http_v2_module)"
+    default n
+    help
+      Enable the ngx_http_v2_module and related source files (HTTP/2 support)
+
 config LIBNGINX_MAIN_FUNCTION
 	bool "Provide main function"
 	default n
@@ -342,8 +348,8 @@ config LIBNGINX_HTTP_SCGI
 
 config LIBNGINX_HTTP_GRPC
 	bool "Enable ngx_http_grpc_module"
-	default y
-	select LIBNGINX_HTTP_V2
+	default n
+	depends on LIBNGINX_HTTP_V2
 	help
 		The ngx_http_grpc_module module allows passing requests to a gRPC server.
 
