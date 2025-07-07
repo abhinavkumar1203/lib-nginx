@@ -1,0 +1,57 @@
+From 9d12c83805adadf8aeb15ff9bf531e432b990fa7 Mon Sep 17 00:00:00 2001
+From: Unikraft <contact@unikraft.org>
+Date: Mon, 7 Jul 2025 06:36:54 +0000
+Subject: [PATCH 3/3] feat: stub ngx_setproctitle and add Kconfig/Makefile.uk
+ support
+
+---
+ Config.uk   | 8 ++++++++
+ Makefile.uk | 7 +++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/Config.uk b/Config.uk
+index 976d4eb..de7978a 100644
+--- a/Config.uk
++++ b/Config.uk
+@@ -27,6 +27,14 @@ menuconfig LIBNGINX
+ 
+ if LIBNGINX
+ 
++config LIBNGINX_DISABLE_REGEX
++    bool "Disable regex support (for unikernel constraints)"
++    default y
++
++config LIBNGINX_HTTP_V2
++    bool "Enable HTTP/2 support"
++    default n
++
+ menuconfig LIBNGINX_HTTP_V2
+     bool "Enable HTTP/2 (ngx_http_v2_module)"
+     default n
+diff --git a/Makefile.uk b/Makefile.uk
+index 742b627..1a0de17 100644
+--- a/Makefile.uk
++++ b/Makefile.uk
+@@ -53,12 +53,19 @@ $(eval $(call patch,libnginx,$(LIBNGINX_PATCHDIR),nginx-$(LIBNGINX_VERSION)))
+ ################################################################################
+ # Helpers
+ ################################################################################
++ifeq ($(CONFIG_LIBNGINX_DISABLE_REGEX),y)
++    # don’t include regex code
++else
++    LIBNGINX_SRCS += $(LIBNGINX_SRC)/http/modules/ngx_http_rewrite_module.c
++endif
++
+ LIBNGINX_SRC = $(LIBNGINX_ORIGIN)/$(LIBNGINX_BASENAME)/src
+ 
+ ################################################################################
+ # Sources
+ ################################################################################
+ LIBNGINX_SRCS-$(CONFIG_LIBNGINX_MAIN_FUNCTION) += $(LIBNGINX_BASE)/main.c|unikraft
++LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2.c
+ 
+ ################################################################################
+ # Library includes
+-- 
+2.43.0
+
