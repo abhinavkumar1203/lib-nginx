@@ -27,6 +27,14 @@ menuconfig LIBNGINX
 
 if LIBNGINX
 
+config LIBNGINX_DISABLE_REGEX
+    bool "Disable regex support (for unikernel constraints)"
+    default y
+
+config LIBNGINX_HTTP_V2
+    bool "Enable HTTP/2 support"
+    default n
+
 menuconfig LIBNGINX_HTTP_V2
     bool "Enable HTTP/2 (ngx_http_v2_module)"
     default n

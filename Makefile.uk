@@ -53,12 +53,19 @@ $(eval $(call patch,libnginx,$(LIBNGINX_PATCHDIR),nginx-$(LIBNGINX_VERSION)))
 ################################################################################
 # Helpers
 ################################################################################
+ifeq ($(CONFIG_LIBNGINX_DISABLE_REGEX),y)
+    # don’t include regex code
+else
+    LIBNGINX_SRCS += $(LIBNGINX_SRC)/http/modules/ngx_http_rewrite_module.c
+endif
+
 LIBNGINX_SRC = $(LIBNGINX_ORIGIN)/$(LIBNGINX_BASENAME)/src
 
 ################################################################################
 # Sources
 ################################################################################
 LIBNGINX_SRCS-$(CONFIG_LIBNGINX_MAIN_FUNCTION) += $(LIBNGINX_BASE)/main.c|unikraft
+LIBNGINX_SRCS-$(CONFIG_LIBNGINX_HTTP_V2) += $(LIBNGINX_SRC)/http/v2/ngx_http_v2.c
 
 ################################################################################
 # Library includes
